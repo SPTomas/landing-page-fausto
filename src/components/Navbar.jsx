@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import logo from '../assets/logoBlanco.png'
+
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -14,8 +16,8 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto flex justify-between items-center relative z-10 bg-legal-black">
         
         {/* Logo */}
-        <a href="#" className="text-2xl font-bold tracking-widest text-legal-beige">
-          ESTUDIO<span className="text-white font-light">JURÍDICO</span>
+        <a href="#" className="z-50 flex items-center transition-opacity hover:opacity-80">
+          <img src={logo.src} alt="Abogado Fausto Iriarte"  className="h-9 w-auto md:h-11" />
         </a>
 
         {/* Navegación Desktop */}

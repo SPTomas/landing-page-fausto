@@ -1,0 +1,85 @@
+---
+// src/components/About.astro
+import foto from "../assets/FotoFausto2.jpg"
+---
+
+<section id="equipo" class="py-24 bg-legal-dark border-t border-legal-dark">
+  <div class="max-w-7xl mx-auto px-6 md:px-12">
+    
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      
+      {/* Columna Izquierda: Foto (Placeholder por ahora) */}
+      <div class="relative">
+        {/* Un marco decorativo con el color beige */}
+        <div class="absolute -inset-4 border border-legal-beige/30 rounded-sm translate-x-4 translate-y-4 -z-10"></div>
+        
+        {/* Acá después vas a poner la foto real de tu hermano */}
+        <div class="bg-legal-dark aspect-[4/5] rounded-sm overflow-hidden flex items-center justify-center relative group">
+          <img src={foto.src} alt="Foto abogado" class="absolute inset-0 bg-legal-beige/10 group-hover:bg-transparent transition-colors duration-500 z-10">
+          {/* Si tenés la foto, cambias este div por una etiqueta <img> */}
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="0.5" stroke="currentColor" class="w-32 h-32 text-legal-light opacity-20">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+          </svg>
+          <span class="absolute bottom-6 left-6 text-legal-light font-bold tracking-widest bg-legal-black/80 px-4 py-2 text-sm z-20">
+            DR. Iriarte Fausto
+          </span>
+        </div>
+      </div>
+
+      {/* Columna Derecha: Textos */}
+      <div>
+        <span class="text-legal-beige font-semibold tracking-widest text-sm uppercase mb-4 block">Conocé el Estudio</span>
+        <h2 class="text-3xl md:text-5xl font-bold text-white mb-6 leading-tight">
+          Compromiso, ética y <br class="hidden md:block"/> <span class="text-legal-beige italic font-serif">resultados comprobables.</span>
+        </h2>
+        
+        <p class="text-legal-light opacity-80 text-lg mb-8 font-light leading-relaxed">
+          Somos un estudio jurídico dedicado a brindar soluciones legales estratégicas. Entendemos que cada caso es único y requiere una atención personalizada. Nuestro objetivo no es solo asesorar, sino acompañar a nuestros clientes en cada paso del proceso judicial o extrajudicial.
+        </p>
+
+        {/* Lista de Por qué elegirnos */}
+        <h3 class="text-xl font-bold text-white mb-6 border-b border-legal-dark pb-3">¿Por qué elegirnos?</h3>
+        
+        <ul class="space-y-4">
+          <li class="flex items-start gap-4">
+            <div class="mt-1 w-6 h-6 rounded-full bg-legal-beige/10 flex items-center justify-center shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 text-legal-beige">
+                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+              </svg>
+            </div>
+            <div>
+              <strong class="text-white block">Atención Personalizada</strong>
+              <span class="text-legal-light opacity-70 text-sm">Trato directo con el profesional a cargo de tu expediente.</span>
+            </div>
+          </li>
+          
+          <li class="flex items-start gap-4">
+            <div class="mt-1 w-6 h-6 rounded-full bg-legal-beige/10 flex items-center justify-center shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 text-legal-beige">
+                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+              </svg>
+            </div>
+            <div>
+              <strong class="text-white block">Transparencia Total</strong>
+              <span class="text-legal-light opacity-70 text-sm">Información clara sobre costos, plazos y viabilidad real del caso.</span>
+            </div>
+          </li>
+
+          <li class="flex items-start gap-4">
+            <div class="mt-1 w-6 h-6 rounded-full bg-legal-beige/10 flex items-center justify-center shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 text-legal-beige">
+                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+              </svg>
+            </div>
+            <div>
+              <strong class="text-white block">Actualización Constante</strong>
+              <span class="text-legal-light opacity-70 text-sm">Te mantenemos informado sobre cada movimiento y novedad judicial.</span>
+            </div>
+          </li>
+        </ul>
+
+      </div>
+    </div>
+    
+  </div>
+</section>

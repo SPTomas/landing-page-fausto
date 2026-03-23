@@ -1,11 +1,20 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
+import Footer from '../components/Footer.astro';
+import About from '../components/About.astro'; // <-- Importamos Servicios
+
 import Services from '../components/Services.astro'; // <-- Importamos Servicios
+import ContactForm from '../components/ContactForm.jsx';
 ---
 
 <Layout title="Estudio Jurídico | Inicio">
   <main>
     <Hero />
-    <Services /> </main>
+    <About/> <Services /> 
+    <ContactForm client:visible/>
+  
+  </main>
+    <Footer />
+
 </Layout>
