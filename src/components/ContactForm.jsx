@@ -63,7 +63,7 @@ export default function ContactForm() {
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">Agendá tu <span className="text-legal-beige italic font-serif">Consulta</span></h2>
+          <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">Agendá tu <span className="text-legal-beige font-bold">Consulta</span></h2>
           <p className="text-legal-light opacity-80 max-w-2xl mx-auto text-lg">
             Dejanos tus datos y un breve resumen de tu caso. Nos pondremos en contacto a la brevedad para asesorarte.
           </p>

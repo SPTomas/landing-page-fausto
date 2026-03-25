@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Andada+Pro:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 
 @theme {
@@ -6,4 +7,18 @@
   --color-legal-beige: #E7D7BE;
   --color-legal-dark: #1A1A1A;
   --color-legal-light: #FDFBF7;
+}
+
+/* Tipografías personalizadas */
+:root {
+  --font-andada: 'Andada Pro', serif;
+  --font-montserrat: 'Montserrat', sans-serif;
+}
+
+html {
+  font-family: var(--font-montserrat);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-andada);
 }
