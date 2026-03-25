@@ -87,7 +87,7 @@ export default function ContactForm() {
                 </div>
                 <div>
                   <h4 className="text-lg font-bold text-white">Dirección</h4>
-                  <p className="text-legal-light opacity-70 mt-1">Av. Ejemplo 742<br />Córdoba Capital, CP 5000</p>
+                  <p className="text-legal-light opacity-70 mt-1">Av. Ibarbalz 752<br />Córdoba Capital, CP 5000</p>
                 </div>
               </div>
 
