@@ -88,7 +88,7 @@ npm install
 | `npm run preview` | Vista previa de la compilación antes de publicar |
 | `npm run astro check` | Valida errores de TypeScript |
 
-### Desarrollo Local
+### Desarrollo Local  
 
 ```bash
 npm run dev
