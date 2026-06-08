@@ -4,7 +4,8 @@ import Hero from '../components/Hero.astro';
 import Footer from '../components/Footer.astro';
 import About from '../components/About.astro'; // <-- Importamos Servicios
 
-import Services from '../components/Services.astro'; // <-- Importamos Servicios
+import Services from '../components/Services.astro';
+import CoberturaFederal from '../components/CoberturaFederal.astro';
 import ContactForm from '../components/ContactForm.jsx';
 ---
 
@@ -12,7 +13,9 @@ import ContactForm from '../components/ContactForm.jsx';
 <Layout title="Estudio Jurídico | Inicio">
   <main>
     <Hero />
-    <About/> <Services /> 
+    <About />
+    <Services />
+    <CoberturaFederal />
     <ContactForm client:visible/>
   
   </main>
