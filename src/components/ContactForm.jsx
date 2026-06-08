@@ -59,7 +59,7 @@ export default function ContactForm() {
   };
 
   return (
-    <section id="contacto" className="py-24 bg-legal-dark border-t border-legal-dark">
+    <section id="contacto" className="py-24 bg-legal-black border-t border-legal-black">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         
         <div className="text-center mb-16">
@@ -72,7 +72,7 @@ export default function ContactForm() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
           
 {/* Columna 1: Información de Contacto Directa */}
-          <div className="bg-legal-black border border-legal-beige/10 p-8 md:p-10 rounded-sm shadow-2xl flex flex-col justify-center h-full">
+          <div className="bg-legal-dark border border-legal-beige/10 p-8 md:p-10 rounded-sm shadow-2xl flex flex-col justify-center h-full">
             {/* Le cambiamos el borde de abajo al título para que combine con la nueva tarjeta */}
             <h3 className="text-2xl font-bold text-white mb-8 border-b border-legal-beige/10 pb-4">Información del Estudio</h3>
             
@@ -120,7 +120,7 @@ export default function ContactForm() {
             </div>
           </div>
     {/* Columna 2: El Formulario Funcional */}
-    <div className="bg-legal-black border border-legal-beige/10 p-8 md:p-10 rounded-sm shadow-2xl relative">
+    <div className="bg-legal-dark border border-legal-beige/10 p-8 md:p-10 rounded-sm shadow-2xl relative">
             {isSubmitted ? (
               <div className="h-full flex flex-col items-center justify-center text-center py-12">
                 <div className="w-16 h-16 bg-green-500/20 text-green-500 rounded-full flex items-center justify-center mb-6">

@@ -24,6 +24,7 @@ export default function Navbar() {
         <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-legal-light">
           <a href="#servicios" className="hover:text-legal-beige transition-colors duration-300">Servicios</a>
           <a href="#equipo" className="hover:text-legal-beige transition-colors duration-300">El Estudio</a>
+          <a href="#cobertura" className="hover:text-legal-beige transition-colors duration-300">¿Donde Estamos?</a>
           <a href="#contacto" className="hover:text-legal-beige transition-colors duration-300">Contacto</a>
         </nav>
 
