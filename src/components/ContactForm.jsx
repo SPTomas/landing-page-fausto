@@ -14,7 +14,7 @@ export default function ContactForm() {
   const [error, setError] = useState(false);
 
   // ¡Acá vas a poner la URL que te dé Formspree en el paso 2!
-  const FORMSPREE_URL = "https://formspree.io/f/xreynepn";
+  const FORMSPREE_URL = "https://formspree.io/f/mzdqgbyj";
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
