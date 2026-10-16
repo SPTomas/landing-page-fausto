@@ -4,8 +4,10 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 
 // Coverage boundaries and the fallback are generated as a local static asset.
 const BOUNDARIES_URL = `${import.meta.env.BASE_URL}mapa-cobertura.json`;
-const COVERAGE = ['Córdoba', 'Mendoza', 'Catamarca', 'Buenos Aires', 'Tucumán'];
+const CABA = 'Ciudad de Buenos Aires';
+const COVERAGE = ['Córdoba', 'Mendoza', 'Catamarca', 'Buenos Aires', CABA, 'Tucumán', 'San Juan', 'Tierra del Fuego', 'Jujuy'];
 const COUNTRY_BOUNDS = [[-55.2, -73.7], [-21.7, -53.5]];
+const displayName = name => name === CABA ? 'Ciudad Autónoma de Buenos Aires (CABA)' : name;
 
 export default function CoverageMap() {
   const containerRef = useRef(null);
@@ -89,15 +91,12 @@ export default function CoverageMap() {
             const name = feature.properties.shapeName;
             const covered = COVERAGE.includes(name);
             const label = document.createElement('span');
-            label.textContent = `${name}${covered ? (name === 'Córdoba' ? ' · Sede del estudio' : ' · Profesionales asociados') : ''}`;
+            label.textContent = `${displayName(name)}${covered ? (name === 'Córdoba' ? ' · Sede del estudio' : ' · Profesionales asociados') : ''}`;
             layer.bindTooltip(label, { sticky: true, className: 'province-tooltip' });
             if (!covered) return;
 
             provincesRef.current.set(name, layer);
-            const selectProvince = () => {
-              setSelected(name);
-              map.fitBounds(layer.getBounds(), { padding: [45, 45], maxZoom: 6, animate: false });
-            };
+            const selectProvince = () => showProvince(name);
             layer.on('click', selectProvince);
             layer.on('mouseover', () => layer.setStyle({ fillColor: '#f7ecd8', weight: 1.5, opacity: 1 }));
             layer.on('mouseout', () => layer.setStyle({ fillColor: '#e7d7be', weight: 0.7, opacity: vectorReady ? 0 : 0.6 }));
@@ -106,7 +105,7 @@ export default function CoverageMap() {
               if (!path) return;
               path.setAttribute('tabindex', '0');
               path.setAttribute('role', 'button');
-              path.setAttribute('aria-label', `Ver cobertura en ${name}`);
+              path.setAttribute('aria-label', `Ver cobertura en ${displayName(name)}`);
               L.DomEvent.on(path, 'keydown', (event) => {
                 if (event.key === 'Enter' || event.key === ' ') {
                   L.DomEvent.stop(event);
@@ -186,7 +185,7 @@ export default function CoverageMap() {
     const layer = provincesRef.current.get(name);
     if (!layer || !mapRef.current) return;
     setSelected(name);
-    mapRef.current.fitBounds(layer.getBounds(), { padding: [45, 45], maxZoom: 6, animate: false });
+    mapRef.current.fitBounds(layer.getBounds(), { padding: [45, 45], maxZoom: name === CABA ? 11 : 6, animate: false });
   };
 
   const resetView = () => {
@@ -198,21 +197,21 @@ export default function CoverageMap() {
     <div className="coverage-map-card" data-basemap={basemapStatus}>
       <div className="coverage-map-toolbar"><span>ARGENTINA / COBERTURA</span><button type="button" onClick={resetView} disabled={status !== 'ready'}>Ver país <span aria-hidden="true">↗</span></button></div>
       <div className="coverage-map-frame">
-        <div ref={containerRef} className="coverage-map-canvas" role="region" aria-label="Mapa interactivo de Argentina. Provincias con cobertura resaltadas en beige." aria-describedby="coverage-map-help" />
+        <div ref={containerRef} className="coverage-map-canvas" role="region" aria-label="Mapa interactivo de Argentina. Provincias y CABA con cobertura resaltadas en beige." aria-describedby="coverage-map-help" />
         {status !== 'ready' && <div className="coverage-map-message" role="status">
-          {status === 'loading' ? <><span className="map-loading-indicator" aria-hidden="true" />Cargando mapa de cobertura…</> : <><p>No pudimos cargar los límites provinciales.</p><button type="button" onClick={() => setAttempt(value => value + 1)}>Volver a intentar ↗</button></>}
+          {status === 'loading' ? <><span className="map-loading-indicator" aria-hidden="true" />Cargando mapa de cobertura…</> : <><p>No pudimos cargar los límites del mapa.</p><button type="button" onClick={() => setAttempt(value => value + 1)}>Volver a intentar ↗</button></>}
         </div>}
       </div>
       <div className="coverage-map-caption">
-        <p className="coverage-map-legend"><span aria-hidden="true" /> Provincias con cobertura</p>
-        <div className="map-province-buttons" aria-label="Explorar provincias con cobertura">
-          {COVERAGE.map(name => <button key={name} type="button" disabled={status !== 'ready'} aria-pressed={selected === name} onClick={() => showProvince(name)}>{name}</button>)}
+        <p className="coverage-map-legend"><span aria-hidden="true" /> Provincias y CABA con cobertura</p>
+        <div className="map-province-buttons" aria-label="Explorar provincias y CABA con cobertura">
+          {COVERAGE.map(name => <button key={name} type="button" disabled={status !== 'ready'} aria-label={`Ver cobertura en ${displayName(name)}`} aria-pressed={selected === name} onClick={() => showProvince(name)}>{name === CABA ? 'CABA' : name}</button>)}
         </div>
-        <p id="coverage-map-help">Elegí una provincia para ver la cobertura.</p>
+        <p id="coverage-map-help">Elegí una provincia o CABA para ver la cobertura.</p>
         {basemapStatus === 'fallback' && status === 'ready' && <button type="button" className="map-retry" onClick={() => setAttempt(value => value + 1)}>Recargar mapa ↗</button>}
-        <p className="map-selection" aria-live="polite">{selected ? `${selected} · ${selected === 'Córdoba' ? 'Sede del estudio en Córdoba Capital.' : 'Atención a través de profesionales asociados.'}` : ''}</p>
+        <p className="map-selection" aria-live="polite">{selected ? `${displayName(selected)} · ${selected === 'Córdoba' ? 'Sede del estudio en Córdoba Capital.' : 'Atención a través de profesionales asociados.'}` : ''}</p>
       </div>
-      <noscript><p className="coverage-map-caption">Activá JavaScript para explorar el mapa. Tenemos presencia en Córdoba, Mendoza, Catamarca, Buenos Aires y Tucumán.</p></noscript>
+      <noscript><p className="coverage-map-caption">Activá JavaScript para explorar el mapa. Tenemos presencia en Córdoba, Mendoza, Catamarca, Buenos Aires, la Ciudad Autónoma de Buenos Aires (CABA), Tucumán, San Juan, Tierra del Fuego y Jujuy.</p></noscript>
     </div>
   );
 }
