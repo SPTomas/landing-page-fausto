@@ -127,6 +127,27 @@ Actualizar en `src/components/ContactForm.jsx`:
 
 ## 🚀 Despliegue
 
+### Mapa de cobertura sin servicios de pago
+
+El mapa combina Leaflet con una base vectorial de OpenStreetMap servida por
+[OpenFreeMap](https://openfreemap.org/), mediante MapLibre. Este proveedor permite
+el uso comercial gratuito, sin cuenta, claves de API ni suscripciones.
+Las etiquetas priorizan los nombres en español disponibles en los datos y usan
+el nombre local cuando no hay traducción. «Islas Malvinas» se muestra en español.
+Los controles tienen CSS propio y los colores de las capas vectoriales están
+definidos en `src/components/coverageMapStyle.js`.
+
+Durante `npm run build`, `src/pages/mapa-cobertura.json.ts` obtiene los límites
+de IGN/UNHCR mediante geoBoundaries y las geometrías de contexto de Natural Earth.
+Astro genera `dist/mapa-cobertura.json`, que se publica junto con la página.
+La compilación necesita conexión a esas fuentes públicas. Los visitantes cargan
+los límites de cobertura desde la propia web y el fondo, los nombres y las calles
+desde OpenFreeMap. Si el fondo falla o el navegador no admite WebGL, se mantiene
+la vista local con las provincias, el zoom y la selección. Las atribuciones de
+las fuentes se muestran en una línea discreta en el pie de página. Los nombres
+de países se ocultan al aparecer los de provincias y, al acercar más el mapa,
+se muestran los de ciudades.
+
 El proyecto está listo para ser desplegado en:
 - **Vercel** (recomendado para Astro)
 - **Netlify**

@@ -36,38 +36,40 @@ const areasDePractica = [
 ];
 ---
 
-<section id="servicios" class="py-24 bg-legal-black">
-  <div class="max-w-7xl mx-auto px-6 md:px-12">
+<section id="servicios" class="services-section section-space" aria-labelledby="services-title">
+  <div class="site-container">
     
     {/* Encabezado de la sección */}
-    <div class="text-center mb-16">
-      <h2 class="text-3xl md:text-5xl font-bold text-white mb-6">Áreas de <span class="text-legal-beige font-bold">Práctica</span></h2>
-      <p class="text-legal-light opacity-80 max-w-2xl mx-auto text-lg">
-        Brindamos soluciones jurídicas precisas en diversas ramas del derecho, adaptándonos a las necesidades específicas de cada cliente.
+    <div class="section-heading">
+      <div><p class="eyebrow">02 / Áreas de práctica</p><h2 id="services-title" class="section-title">Una respuesta legal<br />para <em>cada situación.</em></h2></div>
+      <p class="section-description">
+        Asesoramiento integral para proteger lo que te importa. Encontrá el área en la que podemos ayudarte.
       </p>
     </div>
 
     {/* Grilla de Tarjetas (CSS Grid) */}
     {/* grid-cols-1 (celu) -> md:grid-cols-2 (tablet) -> lg:grid-cols-3 (compu) */}
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <div class="services-grid">
       
       {/* Recorremos el array de áreas de práctica */}
-      {areasDePractica.map((area) => (
-        <div class="group bg-legal-black border border-legal-beige/10 p-8 rounded-sm hover:border-legal-beige/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-legal-beige/5">
+      {areasDePractica.map((area, index) => (
+        <article class="service-card">
           
           {/* Ícono de la tarjeta */}
-          <div class="w-12 h-12 bg-legal-dark rounded-full flex items-center justify-center mb-6 group-hover:bg-legal-beige transition-colors duration-300">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-legal-beige group-hover:text-legal-black transition-colors duration-300">
+          <div class="service-top">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.2" stroke="currentColor" width="30" height="30" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" d={area.icono} />
             </svg>
+            <span>0{index + 1}</span>
           </div>
 
           {/* Textos de la tarjeta */}
-          <h3 class="text-xl font-bold text-white mb-4 group-hover:text-legal-beige transition-colors duration-300">{area.titulo}</h3>
-          <p class="text-legal-light opacity-70 leading-relaxed font-light">
+          <h3>{area.titulo}</h3>
+          <p>
             {area.descripcion}
           </p>
-        </div>
+          <a href={`https://wa.me/5493517869351?text=${encodeURIComponent(`Hola, quisiera consultar por ${area.titulo}.`)}`} target="_blank" rel="noopener noreferrer" class="text-link dark-link" aria-label={`Consultar por ${area.titulo} en WhatsApp`}>Consultar sobre esta área <span aria-hidden="true">↗</span></a>
+        </article>
       ))}
 
     </div>

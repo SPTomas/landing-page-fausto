@@ -25,9 +25,6 @@ export default function ContactForm() {
     setIsSubmitting(true);
     setError(false);
 
-    // 1. Vemos a dónde está intentando mandar
-    console.log("Intentando enviar a:", FORMSPREE_URL);
-    
     try {
       const response = await fetch(FORMSPREE_URL, {
         method: 'POST',
@@ -35,23 +32,17 @@ export default function ContactForm() {
           'Content-Type': 'application/json',
           'Accept': 'application/json'
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(formData),
+        signal: AbortSignal.timeout(20000)
       });
-
-      // 2. Vemos qué nos responde Formspree
-      console.log("Estado de la respuesta:", response.status);
 
       if (response.ok) {
         setIsSubmitted(true);
         setFormData({ nombre: '', email: '', telefono: '', mensaje: '', _gotcha: '' });
       } else {
-        // 3. Si falla, leemos el mensaje de error exacto
-        const dataError = await response.json();
-        console.error("Error devuelto por Formspree:", dataError);
         setError(true);
       }
-    } catch (err) {
-      console.error("Error de conexión/red:", err);
+    } catch {
       setError(true);
     } finally {
       setIsSubmitting(false);
@@ -63,7 +54,8 @@ export default function ContactForm() {
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">Agendá tu <span className="text-legal-beige font-bold">Consulta</span></h2>
+          <p className="eyebrow justify-center">04 / Demos el primer paso</p>
+          <h2 className="section-title text-white">Tu tranquilidad empieza<br />con una <em className="text-legal-beige">conversación.</em></h2>
           <p className="text-legal-light opacity-80 max-w-2xl mx-auto text-lg">
             Dejanos tus datos y un breve resumen de tu caso. Nos pondremos en contacto a la brevedad para asesorarte.
           </p>
@@ -114,13 +106,13 @@ export default function ContactForm() {
                 </div>
                 <div>
                   <h4 className="text-lg font-bold text-white">Correo Electrónico</h4>
-                  <p className="text-legal-light opacity-70 mt-1">abogadofaustoiriarte@gmail.com</p>
+                  <a href="mailto:abogadofaustoiriarte@gmail.com" className="text-legal-light opacity-70 mt-1 inline-block hover:underline">abogadofaustoiriarte@gmail.com</a>
                 </div>
               </div>
             </div>
           </div>
     {/* Columna 2: El Formulario Funcional */}
-    <div className="bg-legal-dark border border-legal-beige/10 p-8 md:p-10 rounded-sm shadow-2xl relative">
+    <div aria-live="polite" className="bg-legal-dark border border-legal-beige/10 p-8 md:p-10 rounded-sm shadow-2xl relative">
             {isSubmitted ? (
               <div className="h-full flex flex-col items-center justify-center text-center py-12">
                 <div className="w-16 h-16 bg-green-500/20 text-green-500 rounded-full flex items-center justify-center mb-6">
@@ -137,7 +129,8 @@ export default function ContactForm() {
                 </button>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+              <form onSubmit={handleSubmit} aria-busy={isSubmitting} className="flex flex-col gap-6">
+                <p className="text-xs text-legal-light/70">Nombre, correo y resumen del caso son obligatorios.</p>
                 
                 {/* EL HONEYPOT: Campo oculto con CSS. Los humanos no lo ven, los bots sí. */}
                 <input 
@@ -152,17 +145,17 @@ export default function ContactForm() {
 
                 <div>
                   <label htmlFor="nombre" className="block text-sm font-medium text-legal-light opacity-80 mb-2">Nombre Completo</label>
-                  <input type="text" id="nombre" name="nombre" required value={formData.nombre} onChange={handleChange} className="w-full bg-legal-black border border-legal-beige/20 rounded-sm px-4 py-3 text-white focus:outline-none focus:border-legal-beige transition-colors" placeholder="Ej. Juan Pérez" />
+                  <input type="text" id="nombre" name="nombre" autoComplete="name" maxLength={150} required value={formData.nombre} onChange={handleChange} className="w-full bg-legal-black border border-legal-beige/20 rounded-sm px-4 py-3 text-white focus:outline-none focus:border-legal-beige transition-colors" placeholder="Ej. Juan Pérez" />
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label htmlFor="email" className="block text-sm font-medium text-legal-light opacity-80 mb-2">Correo Electrónico</label>
-                    <input type="email" id="email" name="email" required value={formData.email} onChange={handleChange} className="w-full bg-legal-black border border-legal-beige/20 rounded-sm px-4 py-3 text-white focus:outline-none focus:border-legal-beige transition-colors" placeholder="ejemplo@correo.com" />
+                    <input type="email" id="email" name="email" autoComplete="email" required value={formData.email} onChange={handleChange} className="w-full bg-legal-black border border-legal-beige/20 rounded-sm px-4 py-3 text-white focus:outline-none focus:border-legal-beige transition-colors" placeholder="ejemplo@correo.com" />
                   </div>
                   <div>
                     <label htmlFor="telefono" className="block text-sm font-medium text-legal-light opacity-80 mb-2">Teléfono</label>
-                    <input type="tel" id="telefono" name="telefono" value={formData.telefono} onChange={handleChange} className="w-full bg-legal-black border border-legal-beige/20 rounded-sm px-4 py-3 text-white focus:outline-none focus:border-legal-beige transition-colors" placeholder="Cod. Área + Número" />
+                    <input type="tel" id="telefono" name="telefono" autoComplete="tel" value={formData.telefono} onChange={handleChange} className="w-full bg-legal-black border border-legal-beige/20 rounded-sm px-4 py-3 text-white focus:outline-none focus:border-legal-beige transition-colors" placeholder="Cod. Área + Número" />
                   </div>
                 </div>
 
@@ -172,7 +165,7 @@ export default function ContactForm() {
                 </div>
 
                 {error && (
-                  <p className="text-red-400 text-sm mt-2">Hubo un error al enviar el mensaje. Por favor, intentá de nuevo.</p>
+                  <p role="alert" className="text-red-400 text-sm mt-2">No pudimos enviar tu consulta. Intentá nuevamente o <a href="https://wa.me/5493517869351" target="_blank" rel="noopener noreferrer" className="underline">escribinos por WhatsApp</a>.</p>
                 )}
 
                 <button 

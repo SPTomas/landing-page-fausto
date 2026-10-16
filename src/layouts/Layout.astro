@@ -1,7 +1,8 @@
 ---
 import '../styles/global.css';
-import Header from '../components/Header.astro';
 import Navbar from '../components/Navbar.jsx';
+const { title = 'Estudio Jurídico Iriarte | Abogado en Córdoba' } = Astro.props;
+const description = 'Asesoramiento legal personalizado en Córdoba. Derecho penal, familia, sucesiones, accidentes, derecho civil y laboral. Consultas presenciales y online con el Dr. Fausto Iriarte.';
 ---
 
 <!doctype html>
@@ -9,10 +10,19 @@ import Navbar from '../components/Navbar.jsx';
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.png" />
-		<title>Estudio Jurídico | Dr. Faustino Iriarte</title>
+		<link rel="icon" type="image/png" href="/favicon.png" />
+		<meta name="description" content={description} />
+		<meta name="theme-color" content="#191c19" />
+		<meta property="og:type" content="website" />
+		<meta property="og:locale" content="es_AR" />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<title>{title}</title>
 	</head>
 	<body class="bg-legal-black antialiased">
+		<a href="#contenido" class="skip-link">Saltar al contenido</a>
 		<Navbar client:load />
 		<slot />
 
