@@ -1,49 +1,25 @@
-
 ---
-import Fondo1 from "../assets/Fondo1.png";
-import Fondo2 from "../assets/Fondo2.png";
+import { Image } from 'astro:assets';
+import foto from '../assets/FotoFausto3.jpg';
 ---
 
-<section class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden bg-legal-black">
-  
-  {/* Fondo móvil (Fondo1) */}
-  <div 
-    class="absolute inset-0 md:hidden bg-cover bg-center opacity-12"
-    style={`background-image: url(${Fondo1.src});`}
-  ></div>
-  
-  {/* Fondo desktop (Fondo2) */}
-  <div 
-    class="hidden md:block absolute inset-0 bg-cover bg-center opacity-12"
-    style={`background-image: url(${Fondo2.src});`}
-  ></div>
-
-  <div class="relative z-10 max-w-7xl mx-auto px-6 md:px-12 text-center">
-    
-    {/* Etiqueta pequeña superior */}
-    <span class="inline-block py-1 px-3 rounded-full bg-legal-dark border border-legal-beige/20 text-legal-beige text-xs md:text-sm font-semibold tracking-widest mb-6 md:mb-8 uppercase">
-      Estudio Jurídico Integral
-    </span>
-
-    {/* Título Principal */}
-    <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 md:mb-8 leading-tight md:leading-tight tracking-tight max-w-4xl mx-auto">
-      Defendemos tus <span class="text-legal-beige font-bold">derechos</span> con determinación.
-    </h1>
-    
-    {/* Subtítulo */}
-    <p class="text-legal-light text-base md:text-xl lg:text-2xl mb-10 md:mb-12 opacity-90 max-w-2xl mx-auto font-light">
-      Asesoramiento legal de excelencia para empresas y particulares. Experiencia, estrategia y resultados.
-    </p>
-
-    {/* Botones de Acción */}
-    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
-      <a href="#contacto" class="w-full sm:w-auto bg-legal-beige text-legal-black font-bold py-3 md:py-4 px-8 md:px-10 rounded-sm hover:bg-white transition-all duration-300 hover:scale-105 shadow-lg shadow-legal-beige/20 text-center">
-        Consultar mi caso
-      </a>
-      <a href="#servicios" class="w-full sm:w-auto bg-transparent text-white border border-legal-light/30 font-semibold py-3 md:py-4 px-8 md:px-10 rounded-sm hover:border-legal-beige hover:text-legal-beige transition-all duration-300 text-center">
-        Nuestros Servicios
-      </a>
+<section id="inicio" class="hero" aria-labelledby="hero-title">
+  <div class="site-container hero-grid">
+    <div class="hero-copy">
+      <p class="eyebrow"><span class="eyebrow-line"></span> Estudio jurídico integral · Córdoba</p>
+      <h1 id="hero-title">Tus derechos.<br />Nuestro <em>compromiso.</em></h1>
+      <p class="hero-description">Detrás de cada caso hay una persona. Te acompañamos con una estrategia legal clara y la atención que tu situación merece.</p>
+      <div class="hero-actions">
+        <a href="#contacto" class="button-primary">Conversemos sobre tu caso <span aria-hidden="true">↗</span></a>
+        <a href="#servicios" class="text-link">Conocé nuestras áreas <span aria-hidden="true">↓</span></a>
+      </div>
+      <div class="hero-details"><span>Atención personalizada</span><span>Presencial y online</span></div>
     </div>
-
+    <figure class="hero-portrait">
+      <Image src={foto} alt="Fausto Iriarte frente al Palacio de Justicia de Córdoba" widths={[480, 720, 1000]} sizes="(min-width: 1024px) 42vw, 90vw" width={1000} format="webp" loading="eager" fetchpriority="high" />
+      <figcaption><span>Tu caso, en buenas manos.</span><strong>Dr. Fausto Iriarte</strong><small>ABOGADO · CÓRDOBA, ARGENTINA</small></figcaption>
+      <span class="portrait-label" aria-hidden="true">COMPROMISO & EXCELENCIA</span>
+    </figure>
   </div>
+  <div class="hero-bottom site-container"><span>Asesoramiento para particulares y empresas</span><a href="#equipo">Conocé el estudio <span aria-hidden="true">↓</span></a></div>
 </section>

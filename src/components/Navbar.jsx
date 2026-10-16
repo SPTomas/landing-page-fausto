@@ -1,87 +1,51 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import logo from '../assets/logoBlanco.png';
 
-import logo from '../assets/logoBlanco.png'
+const links = [
+  ['#equipo', 'El estudio'],
+  ['#servicios', 'Áreas de práctica'],
+  ['#cobertura', 'Cobertura'],
+  ['#contacto', 'Contacto'],
+];
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const toggleRef = useRef(null);
 
-  // Función para cerrar el menú cuando hacen clic en un enlace
-  const closeMenu = () => setIsMenuOpen(false);
+  useEffect(() => {
+    const onKeyDown = (event) => {
+      if (event.key === 'Escape' && isMenuOpen) {
+        setIsMenuOpen(false);
+        toggleRef.current?.focus();
+      }
+    };
+    const media = window.matchMedia('(min-width: 1024px)');
+    const closeOnDesktop = () => { if (media.matches) setIsMenuOpen(false); };
+    document.addEventListener('keydown', onKeyDown);
+    media.addEventListener('change', closeOnDesktop);
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+      media.removeEventListener('change', closeOnDesktop);
+    };
+  }, [isMenuOpen]);
 
   return (
-    <header className="bg-legal-black border-b border-legal-dark py-4 px-6 md:px-12 fixed w-full top-0 z-50">
-      
-      {/* Contenedor principal del Header. Le ponemos z-10 y bg-legal-black 
-          para que quede SIEMPRE por encima del menú desplegable y lo tape si sube */}
-      <div className="max-w-7xl mx-auto flex justify-between items-center relative z-10 bg-legal-black">
-        
-        {/* Logo */}
-        <a href="#" className="z-50 flex items-center transition-opacity hover:opacity-80">
-          <img src={logo.src} alt="Abogado Fausto Iriarte"  className="h-9 w-auto md:h-11" />
+    <header className="site-header">
+      <div className="site-container nav-inner">
+        <a href="#inicio" aria-label="Estudio Jurídico Iriarte — Inicio" onClick={() => setIsMenuOpen(false)}>
+          <img src={logo.src} width={logo.width} height={logo.height} alt="Abogado Fausto Iriarte" className="nav-logo" />
         </a>
-
-        {/* Navegación Desktop */}
-        <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-legal-light">
-          <a href="#servicios" className="hover:text-legal-beige transition-colors duration-300">Servicios</a>
-          <a href="#equipo" className="hover:text-legal-beige transition-colors duration-300">El Estudio</a>
-          <a href="#cobertura" className="hover:text-legal-beige transition-colors duration-300">¿Donde Estamos?</a>
-          <a href="#contacto" className="hover:text-legal-beige transition-colors duration-300">Contacto</a>
+        <nav className="desktop-nav" aria-label="Navegación principal">
+          {links.map(([href, label]) => <a key={href} href={href}>{label}</a>)}
         </nav>
-
-        {/* Botón Desktop */}
-        <div className="hidden md:block">
-          <a href="#contacto" className="bg-legal-beige text-legal-black px-6 py-2 rounded-sm font-bold hover:bg-white transition-colors duration-300">
-            Agendar Consulta
-          </a>
-        </div>
-
-        {/* Botón Hamburguesa Mobile */}
-        <button 
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className="md:hidden text-legal-beige focus:outline-none"
-          aria-label="Toggle menu"
-        >
-          {isMenuOpen ? (
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          ) : (
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-            </svg>
-          )}
+        <a href="#contacto" className="nav-cta">Agendar consulta <span aria-hidden="true">↗</span></a>
+        <button ref={toggleRef} type="button" className="menu-toggle" aria-expanded={isMenuOpen} aria-controls="mobile-navigation" aria-label={isMenuOpen ? 'Cerrar menú' : 'Abrir menú'} onClick={() => setIsMenuOpen(!isMenuOpen)}>
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true"><path d={isMenuOpen ? 'M6 6l12 12M6 18L18 6' : 'M3 6h18M3 12h18M3 18h18'} /></svg>
         </button>
       </div>
-
-      {/* Menú Desplegable Mobile (Acá está la animación) 
-        - quitamos el {isMenuOpen && ...}
-        - transition-all duration-300 ease-in-out: le dice que cualquier cambio de estado dure 0.3 segundos y sea fluido.
-        - Usamos un template string (` `) para inyectar clases condicionales dependiendo de si isMenuOpen es true o false.
-      */}
-      <div 
-        className={`
-          md:hidden absolute top-full left-0 w-full bg-legal-black border-b border-legal-dark 
-          flex flex-col items-center py-8 gap-6 shadow-2xl
-          transition-all duration-300 ease-in-out -z-10
-          ${isMenuOpen 
-            ? 'opacity-100 translate-y-0 visible pointer-events-auto' 
-            : 'opacity-0 -translate-y-5 invisible pointer-events-none'
-          }
-        `}
-      >
-        {/* Explicación de las clases condicionales:
-          - opacity-0 / opacity-100: Hace que se desvanezca o aparezca (fade).
-          - -translate-y-5 / translate-y-0: Lo mueve un poquito hacia arriba cuando está oculto, creando un efecto de "caída" al abrir.
-          - invisible / visible: Asegura que los lectores de pantalla no lo lean cuando está cerrado.
-          - pointer-events-none: Evita que el usuario haga clic por accidente en los botones invisibles cuando el menú está cerrado.
-        */}
-        <a href="#servicios" onClick={closeMenu} className="text-legal-light text-lg hover:text-legal-beige transition-colors">Servicios</a>
-        <a href="#equipo" onClick={closeMenu} className="text-legal-light text-lg hover:text-legal-beige transition-colors">El Estudio</a>
-        <a href="#contacto" onClick={closeMenu} className="text-legal-light text-lg hover:text-legal-beige transition-colors">Contacto</a>
-        <a href="#contacto" onClick={closeMenu} className="bg-legal-beige text-legal-black px-8 py-3 rounded-sm font-bold mt-4 hover:bg-white transition-colors">
-          Agendar Consulta
-        </a>
-      </div>
+      <nav id="mobile-navigation" className="mobile-nav" aria-label="Navegación móvil" hidden={!isMenuOpen}>
+        {links.map(([href, label]) => <a key={href} href={href} onClick={() => setIsMenuOpen(false)}>{label}<span aria-hidden="true">↗</span></a>)}
+      </nav>
     </header>
   );
 }
